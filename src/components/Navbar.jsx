@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { AuthContext } from '../provider/AuthProvider';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
 
@@ -35,14 +36,14 @@ const Navbar = () => {
   </div>
   <div className="navbar-center hidden lg:flex">
     <ul className="menu menu-horizontal px-1">
-      <li><a>Home</a></li>
+      <li><Link to = "/">Home</Link></li>
       
-      <li><a>Products</a></li>
+      <li><Link to = "/products">Products</Link></li>
     </ul>
   </div>
   <div className="navbar-end">
     {
-        user ? <a className="btn">Log Out</a> : <a className="btn">Login</a>
+        user ? <Link to = "" className="btn">Log Out</Link> : <Link to ="login" className="btn">Login</Link>
     }
   </div>
 </div>
