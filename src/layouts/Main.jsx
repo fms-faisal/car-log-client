@@ -1,10 +1,11 @@
 import React from 'react';
+import Navbar from '../components/Navbar';
 
 const Main = () => {
     return (
-        <div>
+        <div className='w-[95%] mx-auto'>
             {/* Navbar  */}
-                <h1 className='text-3xl font-bold text-center'>Car Log</h1>
+                <Navbar />
             {/* Outlet  */}
 
             {/* Footer  */}
