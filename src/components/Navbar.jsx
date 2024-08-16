@@ -1,6 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { AuthContext } from '../provider/AuthProvider';
 
 const Navbar = () => {
+
+    const {user} = useContext(AuthContext)
     return (
         <div>
             <div className="navbar bg-base-100">
@@ -38,7 +41,9 @@ const Navbar = () => {
     </ul>
   </div>
   <div className="navbar-end">
-    <a className="btn">Login</a>
+    {
+        user ? <a className="btn">Log Out</a> : <a className="btn">Login</a>
+    }
   </div>
 </div>
         </div>
