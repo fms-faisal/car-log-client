@@ -14,7 +14,7 @@ const Register = () => {
       } = useContext(AuthContext)
       const navigate = useNavigate()
 
-          // Google Register
+     // Google Register
 
     const handleGoogleRegister = async() => {
         try {
@@ -23,7 +23,7 @@ const Register = () => {
             Swal.fire({
                 position: "top-end",
                 icon: "success",
-                title: "Login Succesfull",
+                title: "Registration Succesfull",
                 showConfirmButton: false,
                 timer: 1500
               });
@@ -33,13 +33,48 @@ const Register = () => {
             Swal.fire({
                 position: "top-end",
                 icon: "error",
-                title: "Login Failed",
+                title: "Registration Failed",
                 showConfirmButton: false,
                 timer: 1500
               });
         }
     }
 
+    // User email pass registration
+
+    const handleRegistration = async (e) => {
+        e.preventDefault()
+        const form = e.target
+        const email = form.email.value
+        const name = form.name.value 
+        const photo = form.photo.value 
+        const pass = form.password.value 
+        console.log({email, pass, name, photo})
+    try {
+        const result = await createUser(email, pass)
+        console.log(result)
+        await updateUserProfile(name, photo)
+        setUser({...user, photoURL: photo, displayName: name})
+        navigate('/')
+        Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Registration Succesfull",
+            showConfirmButton: false,
+            timer: 1500
+          });
+        
+    }catch (err) {
+        console.log(err)
+        Swal.fire({
+            position: "top-end",
+            icon: "error",
+            title: "Registration Failed",
+            showConfirmButton: false,
+            timer: 1500
+          });
+    }
+}
 
     return (
         <div>
@@ -94,7 +129,7 @@ const Register = () => {
 
             <span className='w-1/5 border-b dark:border-gray-400 lg:w-1/4'></span>
           </div>
-          <form>
+          <form onSubmit={handleRegistration}>
             <div className='mt-4'>
               <label
                 className='block mb-2 text-sm font-medium text-gray-600 '
