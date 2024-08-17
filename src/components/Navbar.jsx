@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 const Navbar = () => {
 
-    const {user} = useContext(AuthContext)
+    const {user, logOut} = useContext(AuthContext)
     return (
         <div>
             <div className="navbar bg-base-100">
@@ -43,7 +43,7 @@ const Navbar = () => {
   </div>
   <div className="navbar-end">
     {
-        user ? <Link to = "" className="btn">Log Out</Link> : <Link to ="login" className="btn">Login</Link>
+        user ? <button onClick={logOut} className="btn">Log Out</button> : <Link to ="login" className="btn">Login</Link>
     }
   </div>
 </div>
