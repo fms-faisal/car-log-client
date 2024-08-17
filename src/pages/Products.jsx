@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import CarCard from '../components/CarCard';
 import Swal from 'sweetalert2';
+import Skeleton from '../components/Skeleton';
 
 const Products = () => {
     const [cars, setCars] = useState([]);
@@ -9,8 +10,9 @@ const Products = () => {
     const [category, setCategory] = useState('');
     const [priceRange, setPriceRange] = useState('');
     const [sort, setSort] = useState('');
-    const [page, setPage] = useState(1); // Added page state
-    const [pageCount, setPageCount] = useState(0); // Added pageCount state
+    const [page, setPage] = useState(1); 
+    const [pageCount, setPageCount] = useState(0);
+    const [loading, setLoading] = useState(false); 
 
     const distinctBrands = [
         "Tesla", "Ford", "Chevrolet", "Nissan", "BMW", "Mercedes-Benz", 
@@ -26,14 +28,17 @@ const Products = () => {
     ];
 
     const handleSearch = async () => {
+
+        setLoading(true);
+
         const params = new URLSearchParams({
             search,
             brandName,
             category,
             priceRange,
             sort,
-            page, // Include page number
-            limit: 10 // Limit results per page
+            page, 
+            limit: 10 
         }).toString();
 
         try {
@@ -53,8 +58,11 @@ const Products = () => {
             }
         } catch (error) {
             console.error('Error fetching data:', error);
+        } finally {
+            setLoading(false); // Set loading to false when fetch operation completes
         }
     };
+
 
     useEffect(() => {
         handleSearch();
@@ -123,25 +131,28 @@ const Products = () => {
                 </div>
             </div>
 
-            <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-4'>
-                {cars.map(car => (<CarCard key={car._id} car={car} />))}
-            </div>
+            {loading ? (
+                <Skeleton></Skeleton>
+            ) : (
+           <div> <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-4'>
+           {cars.map(car => (<CarCard key={car._id} car={car} />))}
+       </div>
 
-            <div className="pagination flex justify-center my-8">
-                <button className="flex items-center px-4 py-2 mx-1 text-gray-700 transition-colors duration-300 transform bg-white rounded-md dark:bg-gray-800 dark:text-gray-200 hover:bg-blue-600 dark:hover:bg-blue-500 hover:text-white dark:hover:text-gray-200" 
-                    onClick={() => handlePageChange(page - 1)}
-                    disabled={page === 1} // Disable if on the first page
-                >
-                    Previous
-                </button>
-                <span className="flex items-center px-4 py-2 mx-1 text-gray-500 bg-white rounded-md cursor-not-allowed dark:bg-gray-800 dark:text-gray-600" >Page {page} of {pageCount}</span>
-                <button className="flex items-center px-4 py-2 mx-1 text-gray-700 transition-colors duration-300 transform bg-white rounded-md dark:bg-gray-800 dark:text-gray-200 hover:bg-blue-600 dark:hover:bg-blue-500 hover:text-white dark:hover:text-gray-200"
-                    onClick={() => handlePageChange(page + 1)}
-                    disabled={page === pageCount} // Disable if on the last page
-                >
-                    Next
-                </button>
-            </div>
+       <div className="pagination flex justify-center my-8">
+           <button className="flex items-center px-4 py-2 mx-1 text-gray-700 transition-colors duration-300 transform bg-white rounded-md dark:bg-gray-800 dark:text-gray-200 hover:bg-blue-600 dark:hover:bg-blue-500 hover:text-white dark:hover:text-gray-200" 
+               onClick={() => handlePageChange(page - 1)}
+               disabled={page === 1} // Disable if on the first page
+           >
+               Previous
+           </button>
+           <span className="flex items-center px-4 py-2 mx-1 text-gray-500 bg-white rounded-md cursor-not-allowed dark:bg-gray-800 dark:text-gray-600" >Page {page} of {pageCount}</span>
+           <button className="flex items-center px-4 py-2 mx-1 text-gray-700 transition-colors duration-300 transform bg-white rounded-md dark:bg-gray-800 dark:text-gray-200 hover:bg-blue-600 dark:hover:bg-blue-500 hover:text-white dark:hover:text-gray-200"
+               onClick={() => handlePageChange(page + 1)}
+               disabled={page === pageCount} // Disable if on the last page
+           >
+               Next
+           </button>
+       </div> )} </div>  )}
         </div>
     );
 };
