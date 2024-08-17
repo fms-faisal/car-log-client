@@ -27,9 +27,9 @@ const Navbar = () => {
       <ul
         tabIndex={0}
         className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-        <li><a>Home</a></li>
+        <li><Link to = "/">Home</Link></li>
         
-        <li><a>Product</a></li>
+        <li><Link to = "/products">Products</Link></li>
       </ul>
     </div>
     <a className="btn btn-ghost text-xl">Car Log</a>
