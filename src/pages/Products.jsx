@@ -58,7 +58,7 @@ const Products = () => {
 
     useEffect(() => {
         handleSearch();
-    }, []); // Fetch data on changes
+    },[search, brandName, category, priceRange, sort, page]); // Fetch data on changes
 
     const handlePageChange = (newPage) => {
         if (newPage > 0 && newPage <= pageCount) {
@@ -127,15 +127,15 @@ const Products = () => {
                 {cars.map(car => (<CarCard key={car._id} car={car} />))}
             </div>
 
-            <div className="pagination">
-                <button
+            <div className="pagination flex justify-center my-8">
+                <button className="flex items-center px-4 py-2 mx-1 text-gray-700 transition-colors duration-300 transform bg-white rounded-md dark:bg-gray-800 dark:text-gray-200 hover:bg-blue-600 dark:hover:bg-blue-500 hover:text-white dark:hover:text-gray-200" 
                     onClick={() => handlePageChange(page - 1)}
                     disabled={page === 1} // Disable if on the first page
                 >
                     Previous
                 </button>
-                <span>Page {page} of {pageCount}</span>
-                <button
+                <span className="flex items-center px-4 py-2 mx-1 text-gray-500 bg-white rounded-md cursor-not-allowed dark:bg-gray-800 dark:text-gray-600" >Page {page} of {pageCount}</span>
+                <button className="flex items-center px-4 py-2 mx-1 text-gray-700 transition-colors duration-300 transform bg-white rounded-md dark:bg-gray-800 dark:text-gray-200 hover:bg-blue-600 dark:hover:bg-blue-500 hover:text-white dark:hover:text-gray-200"
                     onClick={() => handlePageChange(page + 1)}
                     disabled={page === pageCount} // Disable if on the last page
                 >
