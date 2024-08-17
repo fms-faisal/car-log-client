@@ -4,7 +4,7 @@ import { AuthContext } from '../../provider/AuthProvider';
 import Swal from 'sweetalert2';
 
 const Login = () => {
-    const {singIn, signInWithGoogle} = useContext(AuthContext)
+    const {signIn, signInWithGoogle} = useContext(AuthContext)
     const navigate = useNavigate()
     // Google Signin
 
@@ -33,6 +33,38 @@ const Login = () => {
     }
 
     // Email Password Signin
+
+    const handleSignIn = async (e) =>{
+        e.preventDefault()
+        const form = e.target
+        const email = form.email.value
+        const pass = form.password.value
+        console.log({email, pass})
+        try {
+            // user login
+            const result = await signIn (email, pass)
+            console.log(result)
+            navigate('/')
+            Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "Login Succesfull",
+                showConfirmButton: false,
+                timer: 1500
+              });
+            
+        }catch (err) {
+            console.log(err)
+            Swal.fire({
+                position: "top-end",
+                icon: "error",
+                title: "Login Failed",
+                showConfirmButton: false,
+                timer: 1500
+              });
+
+        }
+    }
 
     return (
         <div>
@@ -94,7 +126,7 @@ const Login = () => {
 
             <span className='w-1/5 border-b dark:border-gray-400 lg:w-1/4'></span>
           </div>
-          <form>
+          <form onSubmit={handleSignIn}>
             <div className='mt-4'>
               <label
                 className='block mb-2 text-sm font-medium text-gray-600 '
